@@ -1,6 +1,8 @@
+import BrailleTool from './components/BrailleTool';
 
 // ...existing code...
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import MorseTool from './components/MorseTool';
 import './App.css';
 
 const tools = [
@@ -114,12 +116,6 @@ function CaesarTool() {
       </div>
     </div>
   );
-}
-function MorseTool() {
-  return <div><h2>Morse Code Tool</h2><p>Encode and decode Morse code here.</p></div>;
-}
-function BrailleTool() {
-  return <div><h2>Braille Tool</h2><p>Encode and decode Braille here.</p></div>;
 }
 function PigpenTool() {
   return <div><h2>Pigpen Cipher Tool</h2><p>Encode and decode Pigpen cipher here.</p></div>;
