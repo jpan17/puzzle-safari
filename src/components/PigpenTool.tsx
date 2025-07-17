@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 
 const pigpenLetters = [
-  'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'
+  'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',' '
 ];
 
 const PigpenTool: React.FC = () => {
@@ -40,20 +40,35 @@ const PigpenTool: React.FC = () => {
         <>
           <div className="pigpen-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: 8, marginBottom: 12 }}>
             {pigpenLetters.map((letter) => (
-              <button
-                key={letter}
-                className="pigpen-btn"
-                onClick={() => handleClick(letter)}
-                title={letter}
-                style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}
-              >
-                <img
-                  src={`/pigpenAlphabet/${letter}.png`}
-                  alt={letter}
-                  style={{ width: 40, height: 40, display: 'block', margin: '0 auto' }}
-                />
-                <div style={{ fontSize: '0.9rem', marginTop: 2, color: 'black' }}>{letter}</div>
-              </button>
+              letter === ' ' ? (
+                <button
+                  key="space"
+                  className="pigpen-btn"
+                  onClick={() => handleClick(' ')}
+                  title="Space"
+                  style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', minHeight: 40 }}
+                >
+                  <div style={{ width: 40, height: 40, display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px dashed #bbb', borderRadius: 8, background: '#fafafa' }}>
+                    <span style={{ color: '#bbb', fontSize: 24 }}>&#9251;</span>
+                  </div>
+                  <div style={{ fontSize: '0.9rem', marginTop: 2, color: 'black' }}>Space</div>
+                </button>
+              ) : (
+                <button
+                  key={letter}
+                  className="pigpen-btn"
+                  onClick={() => handleClick(letter)}
+                  title={letter}
+                  style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}
+                >
+                  <img
+                    src={`/pigpenAlphabet/${letter}.png`}
+                    alt={letter}
+                    style={{ width: 40, height: 40, display: 'block', margin: '0 auto' }}
+                  />
+                  <div style={{ fontSize: '0.9rem', marginTop: 2, color: 'black' }}>{letter}</div>
+                </button>
+              )
             ))}
           </div>
           <div style={{ marginTop: 16 }}>
@@ -63,12 +78,16 @@ const PigpenTool: React.FC = () => {
             <strong>Pigpen Sequence:</strong>
             <span style={{ marginLeft: 8 }}>
               {typedPigpen.map((letter, i) => (
-                <img
-                  key={i}
-                  src={`/pigpenAlphabet/${letter}.png`}
-                  alt={letter}
-                  style={{ width: 32, height: 32, verticalAlign: 'middle', marginRight: 2 }}
-                />
+                letter === ' ' ? (
+                  <span key={i} style={{ display: 'inline-block', width: 32, height: 32, verticalAlign: 'middle', marginRight: 2 }}>&#9251;</span>
+                ) : (
+                  <img
+                    key={i}
+                    src={`/pigpenAlphabet/${letter}.png`}
+                    alt={letter}
+                    style={{ width: 32, height: 32, verticalAlign: 'middle', marginRight: 2 }}
+                  />
+                )
               ))}
             </span>
           </div>

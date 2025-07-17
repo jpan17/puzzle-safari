@@ -15,7 +15,7 @@ const reverseBrailleMap: Record<string, string> = Object.fromEntries(
   Object.entries(brailleMap).map(([k, v]) => [v, k])
 );
 
-const brailleKeys = Object.entries(brailleMap);
+const brailleKeys = [...Object.entries(brailleMap), [' ', ' ']];
 
 function decodeBraille(braille: string[]): string {
   return braille.map(code => reverseBrailleMap[code] || '?').join('');
@@ -58,15 +58,30 @@ const BrailleTool: React.FC = () => {
         <>
           <div className="braille-grid">
             {brailleKeys.map(([char, code]) => (
-              <button
-                key={char}
-                className="braille-btn"
-                onClick={() => handleClick(code)}
-                title={char}
-              >
-                <span style={{ fontSize: '2rem' }}>{code}</span>
-                <div style={{ fontSize: '0.9rem', marginTop: 2 }}>{char}</div>
-              </button>
+              char === ' ' ? (
+                <button
+                  key="space"
+                  className="braille-btn"
+                  onClick={() => handleClick(' ')}
+                  title="Space"
+                  style={{ minHeight: 40 }}
+                >
+                  <div style={{ width: 40, height: 40, display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px dashed #bbb', borderRadius: 8, background: '#fafafa' }}>
+                    <span style={{ color: '#bbb', fontSize: 24 }}>&#9251;</span>
+                  </div>
+                  <div style={{ fontSize: '0.9rem', marginTop: 2 }}>Space</div>
+                </button>
+              ) : (
+                <button
+                  key={char}
+                  className="braille-btn"
+                  onClick={() => handleClick(code)}
+                  title={char}
+                >
+                  <span style={{ fontSize: '2rem' }}>{code}</span>
+                  <div style={{ fontSize: '0.9rem', marginTop: 2 }}>{char}</div>
+                </button>
+              )
             ))}
           </div>
           <div style={{ marginTop: 16 }}>
@@ -87,7 +102,11 @@ const BrailleTool: React.FC = () => {
               }}
             >
               {typedBraille.map((code, i) => (
-                <span key={i}>{code}</span>
+                code === ' ' ? (
+                  <span key={i} style={{ display: 'inline-block', width: 32, height: 32, verticalAlign: 'middle', marginRight: 2 }}>&#9251;</span>
+                ) : (
+                  <span key={i}>{code}</span>
+                )
               ))}
             </span>
           </div>
