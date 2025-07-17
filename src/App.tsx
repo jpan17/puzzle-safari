@@ -47,7 +47,7 @@ const tools = [
 function Dashboard() {
   return (
     <div className="dashboard">
-      <h1> 🧩 Puzzle Safari Tools</h1>
+      <h1> 🧩 Puzzle Hunt Tools</h1>
       <div className="tool-grid">
         {tools.map(tool => (
           <Link to={tool.path} className="tool-card" key={tool.name}>
