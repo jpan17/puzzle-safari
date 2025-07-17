@@ -22,7 +22,9 @@ function decodeBraille(braille: string[]): string {
 }
 
 const BrailleTool: React.FC = () => {
+  const [mode, setMode] = useState<'encode' | 'decode'>('decode');
   const [typedBraille, setTypedBraille] = useState<string[]>([]);
+  const [encodeInput, setEncodeInput] = useState('');
 
   const handleClick = (code: string) => {
     setTypedBraille([...typedBraille, code]);
@@ -30,41 +32,104 @@ const BrailleTool: React.FC = () => {
 
   const handleClear = () => {
     setTypedBraille([]);
+    setEncodeInput('');
+  };
+
+  const handleModeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setMode(e.target.value as 'encode' | 'decode');
+    handleClear();
+  };
+
+  const handleEncodeInput = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setEncodeInput(e.target.value);
   };
 
   const output = decodeBraille(typedBraille);
 
   return (
     <div className="braille-tool">
-      <h2>Braille Input & Decoder</h2>
-      <div className="braille-grid">
-        {brailleKeys.map(([char, code]) => (
-          <button
-            key={char}
-            className="braille-btn"
-            onClick={() => handleClick(code)}
-            title={char}
-          >
-            <span style={{ fontSize: '2rem' }}>{code}</span>
-            <div style={{ fontSize: '0.9rem', marginTop: 2 }}>{char}</div>
-          </button>
-        ))}
-      </div>
-      <div style={{ marginTop: 16 }}>
-        <button onClick={handleClear} className="braille-clear">Clear</button>
-      </div>
-      <div style={{ marginTop: 16 }}>
-        <strong>Braille Sequence:</strong>
-        <span style={{ fontSize: '2rem', marginLeft: 8 }}>
-          {typedBraille.map((code, i) => (
-            <span key={i}>{code}</span>
-          ))}
-        </span>
-      </div>
-      <div style={{ marginTop: 16 }}>
-        <strong>Output:</strong>
-        <span style={{ marginLeft: 8 }}>{output}</span>
-      </div>
+      <h2>Braille Encoder / Decoder</h2>
+      <select value={mode} onChange={handleModeChange} style={{ marginBottom: 12 }}>
+        <option value="decode">Decode (click symbols)</option>
+        <option value="encode">Encode (type text)</option>
+      </select>
+
+      {mode === 'decode' ? (
+        <>
+          <div className="braille-grid">
+            {brailleKeys.map(([char, code]) => (
+              <button
+                key={char}
+                className="braille-btn"
+                onClick={() => handleClick(code)}
+                title={char}
+              >
+                <span style={{ fontSize: '2rem' }}>{code}</span>
+                <div style={{ fontSize: '0.9rem', marginTop: 2 }}>{char}</div>
+              </button>
+            ))}
+          </div>
+          <div style={{ marginTop: 16 }}>
+            <button onClick={handleClear} className="braille-clear">Clear</button>
+          </div>
+          <div style={{ marginTop: 16 }}>
+            <strong>Braille Sequence:</strong>
+            <span
+              style={{
+                fontSize: '2rem',
+                marginLeft: 8,
+                display: 'inline-block',
+                maxWidth: '100%',
+                wordBreak: 'break-word',
+                whiteSpace: 'pre-wrap',
+                overflowWrap: 'break-word',
+                verticalAlign: 'middle',
+              }}
+            >
+              {typedBraille.map((code, i) => (
+                <span key={i}>{code}</span>
+              ))}
+            </span>
+          </div>
+          <div style={{ marginTop: 16 }}>
+            <strong>Output:</strong>
+            <span style={{ marginLeft: 8 }}>{output}</span>
+          </div>
+        </>
+      ) : (
+        <>
+          <textarea
+            value={encodeInput}
+            onChange={handleEncodeInput}
+            placeholder="Enter text to encode..."
+            rows={3}
+            style={{ width: '100%', marginBottom: 12 }}
+          />
+          <div style={{ marginTop: 16 }}>
+            <strong>Braille:</strong>
+            <span
+              style={{
+                fontSize: '2rem',
+                marginLeft: 8,
+                display: 'inline-block',
+                maxWidth: '100%',
+                wordBreak: 'break-word',
+                whiteSpace: 'pre-wrap',
+                overflowWrap: 'break-word',
+                verticalAlign: 'middle',
+              }}
+            >
+              {encodeInput.toUpperCase().split('').map((char, i) =>
+                brailleMap[char] ? (
+                  <span key={i}>{brailleMap[char]}</span>
+                ) : (
+                  <span key={i} style={{ color: '#aaa' }}>{char}</span>
+                )
+              )}
+            </span>
+          </div>
+        </>
+      )}
     </div>
   );
 };

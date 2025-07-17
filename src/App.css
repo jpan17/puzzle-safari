@@ -1,3 +1,38 @@
+/* PigpenTool styles */
+.pigpen-tool {
+  max-width: 480px;
+  margin: 32px auto;
+  padding: 24px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+.pigpen-tool h2 {
+  margin-bottom: 12px;
+}
+.pigpen-tool select,
+.pigpen-tool textarea,
+.pigpen-tool button {
+  font-size: 1rem;
+}
+.pigpen-tool textarea {
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  padding: 8px;
+  resize: vertical;
+}
+.pigpen-tool button {
+  background: #0078d4;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.pigpen-tool button:hover {
+  background: #005fa3;
+}
 /* BrailleTool styles */
 .braille-tool {
   max-width: 520px;

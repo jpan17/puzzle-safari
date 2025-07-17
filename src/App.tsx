@@ -1,11 +1,10 @@
-// ...existing code...
-// ...existing code...
+import PigpenTool from './components/PigpenTool';
 import BrailleTool from './components/BrailleTool';
-
-// ...existing code...
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import MorseTool from './components/MorseTool';
+import CaesarTool from './components/CaesarTool';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import './App.css';
+
 
 const tools = [
   {
@@ -61,15 +60,6 @@ function Dashboard() {
   );
 }
 
-// ...existing code...
-
-// ...existing code...
-
-// ...existing code...
-import CaesarTool from './components/CaesarTool';
-function PigpenTool() {
-  return <div><h2>Pigpen Cipher Tool</h2><p>Encode and decode Pigpen cipher here.</p></div>;
-}
 function AnagramTool() {
   return <div><h2>Anagram Solver</h2><p>Find anagrams for your clues here.</p></div>;
 }
