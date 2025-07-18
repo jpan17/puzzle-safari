@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 
 const pigpenLetters = [
@@ -6,6 +7,7 @@ const pigpenLetters = [
 ];
 
 const PigpenTool: React.FC = () => {
+  const navigate = useNavigate();
   const [mode, setMode] = useState<'encode' | 'decode'>('decode');
   const [typedPigpen, setTypedPigpen] = useState<string[]>([]);
   const [encodeInput, setEncodeInput] = useState('');
@@ -30,6 +32,14 @@ const PigpenTool: React.FC = () => {
 
   return (
     <div className="pigpen-tool">
+      <div style={{ width: '100%', display: 'flex', justifyContent: 'center', marginBottom: 16 }}>
+        <button
+          onClick={() => navigate('/')}
+          style={{ background: '#eee', color: '#222', border: 'none', borderRadius: 6, padding: '10px 24px', cursor: 'pointer', fontWeight: 500, fontSize: '1.08rem', boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}
+        >
+          ← Back to Puzzlehunt Toolkit
+        </button>
+      </div>
       <h2>Pigpen Cipher Encoder / Decoder</h2>
       <select value={mode} onChange={handleModeChange} style={{ marginBottom: 12 }}>
         <option value="decode">Decode (click images)</option>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // Braille Unicode patterns for A-Z, 0-9
 const brailleMap: Record<string, string> = {
@@ -22,6 +23,7 @@ function decodeBraille(braille: string[]): string {
 }
 
 const BrailleTool: React.FC = () => {
+  const navigate = useNavigate();
   const [mode, setMode] = useState<'encode' | 'decode'>('decode');
   const [typedBraille, setTypedBraille] = useState<string[]>([]);
   const [encodeInput, setEncodeInput] = useState('');
@@ -48,6 +50,14 @@ const BrailleTool: React.FC = () => {
 
   return (
     <div className="braille-tool">
+      <div style={{ width: '100%', display: 'flex', justifyContent: 'center', marginBottom: 16 }}>
+        <button
+          onClick={() => navigate('/')}
+          style={{ background: '#eee', color: '#222', border: 'none', borderRadius: 6, padding: '10px 24px', cursor: 'pointer', fontWeight: 500, fontSize: '1.08rem', boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}
+        >
+          ← Back to Puzzlehunt Toolkit
+        </button>
+      </div>
       <h2>Braille Encoder / Decoder</h2>
       <select value={mode} onChange={handleModeChange} style={{ marginBottom: 12 }}>
         <option value="decode">Decode (click symbols)</option>

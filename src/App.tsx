@@ -2,6 +2,7 @@ import PigpenTool from './components/PigpenTool';
 import BrailleTool from './components/BrailleTool';
 import MorseTool from './components/MorseTool';
 import CaesarTool from './components/CaesarTool';
+import AnagramTool from './components/AnagramTool';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import './App.css';
 
@@ -60,9 +61,7 @@ function Dashboard() {
   );
 }
 
-function AnagramTool() {
-  return <div><h2>Anagram Solver</h2><p>Find anagrams for your clues here.</p></div>;
-}
+// ...existing code...
 function SemaphoreTool() {
   return <div><h2>Semaphore Tool</h2><p>Decode semaphore flag signals here.</p></div>;
 }

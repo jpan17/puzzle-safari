@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const morseMap: Record<string, string> = {
   A: '.-',    B: '-...',  C: '-.-.',  D: '-..',   E: '.',
@@ -33,6 +34,7 @@ function decodeMorse(morse: string): string {
 }
 
 const MorseTool: React.FC = () => {
+  const navigate = useNavigate();
   const [input, setInput] = useState('');
   const [mode, setMode] = useState<'encode' | 'decode'>('encode');
   const [output, setOutput] = useState('');
@@ -57,6 +59,14 @@ const MorseTool: React.FC = () => {
 
   return (
     <div className="morse-tool">
+      <div style={{ width: '100%', display: 'flex', justifyContent: 'center', marginBottom: 16 }}>
+        <button
+          onClick={() => navigate('/')}
+          style={{ background: '#eee', color: '#222', border: 'none', borderRadius: 6, padding: '10px 24px', cursor: 'pointer', fontWeight: 500, fontSize: '1.08rem', boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}
+        >
+          ← Back to Puzzlehunt Toolkit
+        </button>
+      </div>
       <h2>Morse Code Encoder / Decoder</h2>
       <select value={mode} onChange={handleModeChange}>
         <option value="encode">Encode</option>
