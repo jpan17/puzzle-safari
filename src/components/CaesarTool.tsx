@@ -48,7 +48,7 @@ const CaesarTool: React.FC = () => {
   }
 
   return (
-    <div className="tool-page" style={{ display: 'flex', alignItems: 'flex-start', gap: 32 }}>
+    <div className="tool-page">
       <div style={{ width: '100%', display: 'flex', justifyContent: 'center', marginBottom: 16 }}>
         <button
           onClick={() => navigate('/')}
@@ -57,77 +57,79 @@ const CaesarTool: React.FC = () => {
           ← Back to Puzzlehunt Toolkit
         </button>
       </div>
-      <div className="caesar-sidebar" style={{ minWidth: 320, maxHeight: 400, overflowY: 'auto', background: '#f6f6f6', borderRadius: 8, padding: 12, boxShadow: '0 2px 8px rgba(0,0,0,0.06)' }}>
-        <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-          {shifts.map(shift => {
-            const output = input ? caesarShift(input, mode === 'encode' ? shift : -shift) : '';
-            const isWord = output && isDictionaryWord(output);
-            const isAllWords = output && isAllWordsDictionary(output);
-            return (
-              <li key={shift} style={{ marginBottom: 8 }}>
-                <strong style={{ fontSize: '0.95em' }}>Shift {shift}:</strong>
-                <div
-                  style={{
-                    fontFamily: 'monospace',
-                    fontSize: '0.92em',
-                    background: isAllWords ? '#e6ffe6' : isWord ? '#e6ffe6' : '#fff',
-                    borderRadius: 4,
-                    padding: '2px 6px',
-                    marginTop: 2,
-                    wordBreak: 'break-word',
-                    maxWidth: 360,
-                    border: isAllWords ? '2px solid #2ecc40' : isWord ? '2px solid #2ecc40' : '1px solid #eee',
-                    color: isAllWords ? '#228B22' : isWord ? '#228B22' : undefined,
-                  }}
-                >
-                  {input ? output : <span style={{ color: '#aaa' }}>—</span>}
-                  {!isAllWords && isWord && <span style={{ marginLeft: 8, fontWeight: 600, color: '#228B22' }}>✔</span>}
-                </div>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
-      <div style={{ flex: 1 }}>
-        <h2>Caesar Cipher Tool</h2>
-        <form className="caesar-form" style={{ marginBottom: 16 }}>
-          <label>
-            Text:
-            {(() => {
-              // Find the best shift (if any) where all output words are dictionary words
-              let highlight = false;
-              if (input) {
-                for (let shift = 0; shift < 26; shift++) {
-                  const output = caesarShift(input, mode === 'encode' ? shift : -shift);
-                  if (isAllWordsDictionary(output)) {
-                    highlight = true;
-                    break;
+      <div style={{ display: 'flex', alignItems: 'flex-start', gap: 32 }}>
+        <div className="caesar-sidebar" style={{ minWidth: 320, maxHeight: 400, overflowY: 'auto', background: '#f6f6f6', borderRadius: 8, padding: 12, boxShadow: '0 2px 8px rgba(0,0,0,0.06)' }}>
+          <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+            {shifts.map(shift => {
+              const output = input ? caesarShift(input, mode === 'encode' ? shift : -shift) : '';
+              const isWord = output && isDictionaryWord(output);
+              const isAllWords = output && isAllWordsDictionary(output);
+              return (
+                <li key={shift} style={{ marginBottom: 8 }}>
+                  <strong style={{ fontSize: '0.95em' }}>Shift {shift}:</strong>
+                  <div
+                    style={{
+                      fontFamily: 'monospace',
+                      fontSize: '0.92em',
+                      background: isAllWords ? '#e6ffe6' : isWord ? '#e6ffe6' : '#fff',
+                      borderRadius: 4,
+                      padding: '2px 6px',
+                      marginTop: 2,
+                      wordBreak: 'break-word',
+                      maxWidth: 360,
+                      border: isAllWords ? '2px solid #2ecc40' : isWord ? '2px solid #2ecc40' : '1px solid #eee',
+                      color: isAllWords ? '#228B22' : isWord ? '#228B22' : undefined,
+                    }}
+                  >
+                    {input ? output : <span style={{ color: '#aaa' }}>—</span>}
+                    {!isAllWords && isWord && <span style={{ marginLeft: 8, fontWeight: 600, color: '#228B22' }}>✔</span>}
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+        <div style={{ flex: 1 }}>
+          <h2>Caesar Cipher Tool</h2>
+          <form className="caesar-form" style={{ marginBottom: 16 }}>
+            <label>
+              Text:
+              {(() => {
+                // Find the best shift (if any) where all output words are dictionary words
+                let highlight = false;
+                if (input) {
+                  for (let shift = 0; shift < 26; shift++) {
+                    const output = caesarShift(input, mode === 'encode' ? shift : -shift);
+                    if (isAllWordsDictionary(output)) {
+                      highlight = true;
+                      break;
+                    }
                   }
                 }
-              }
-              return (
-                <textarea
-                  value={input}
-                  onChange={handleChange}
-                  rows={3}
-                  style={{
-                    width: '100%',
-                    marginBottom: 8,
-                    background: highlight ? '#e6ffe6' : undefined,
-                    border: highlight ? '2px solid #2ecc40' : undefined,
-                  }}
-                />
-              );
-            })()}
-          </label>
-          <label style={{ marginLeft: 16 }}>
-            Mode:
-            <select value={mode} onChange={handleMode} style={{ marginLeft: 8 }}>
-              <option value="encode">Encode</option>
-              <option value="decode">Decode</option>
-            </select>
-          </label>
-        </form>
+                return (
+                  <textarea
+                    value={input}
+                    onChange={handleChange}
+                    rows={3}
+                    style={{
+                      width: '100%',
+                      marginBottom: 8,
+                      background: highlight ? '#e6ffe6' : undefined,
+                      border: highlight ? '2px solid #2ecc40' : undefined,
+                    }}
+                  />
+                );
+              })()}
+            </label>
+            <label style={{ marginLeft: 16 }}>
+              Mode:
+              <select value={mode} onChange={handleMode} style={{ marginLeft: 8 }}>
+                <option value="encode">Encode</option>
+                <option value="decode">Decode</option>
+              </select>
+            </label>
+          </form>
+        </div>
       </div>
     </div>
   );
