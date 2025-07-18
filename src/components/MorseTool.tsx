@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const morseMap: Record<string, string> = {
@@ -21,15 +21,14 @@ function encodeMorse(text: string): string {
   return text
     .toUpperCase()
     .split('')
-    .map(char => morseMap[char] || '')
-    .filter(Boolean)
+    .map(char => morseMap[char] || '?')
     .join(' ');
 }
 
 function decodeMorse(morse: string): string {
   return morse
     .split(' ')
-    .map(code => reverseMorseMap[code] || '')
+    .map(code => reverseMorseMap[code] || '?')
     .join('');
 }
 
@@ -39,22 +38,22 @@ const MorseTool: React.FC = () => {
   const [mode, setMode] = useState<'encode' | 'decode'>('encode');
   const [output, setOutput] = useState('');
 
+  useEffect(() => {
+    if (mode === 'encode') {
+      setOutput(encodeMorse(input));
+    } else {
+      setOutput(decodeMorse(input));
+    }
+  }, [input, mode]);
+
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInput(e.target.value);
   };
 
   const handleModeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setMode(e.target.value as 'encode' | 'decode');
-    setOutput('');
     setInput('');
-  };
-
-  const handleConvert = () => {
-    if (mode === 'encode') {
-      setOutput(encodeMorse(input));
-    } else {
-      setOutput(decodeMorse(input));
-    }
+    setOutput('');
   };
 
   return (
@@ -79,9 +78,6 @@ const MorseTool: React.FC = () => {
         rows={4}
         style={{ width: '100%', marginTop: 8 }}
       />
-      <button onClick={handleConvert} style={{ marginTop: 8 }}>
-        Convert
-      </button>
       <div style={{ marginTop: 16 }}>
         <strong>Output:</strong>
         <div style={{ whiteSpace: 'pre-wrap', marginTop: 4 }}>{output}</div>
