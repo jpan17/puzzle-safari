@@ -3,6 +3,8 @@ import BrailleTool from './components/BrailleTool';
 import MorseTool from './components/MorseTool';
 import CaesarTool from './components/CaesarTool';
 import AnagramTool from './components/AnagramTool';
+import SemaphoreTool from './components/SemaphoreTool';
+import MaritimeTool from './components/MaritimeTool';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import './App.css';
 
@@ -61,13 +63,6 @@ function Dashboard() {
   );
 }
 
-// ...existing code...
-function SemaphoreTool() {
-  return <div><h2>Semaphore Tool</h2><p>Decode semaphore flag signals here.</p></div>;
-}
-function MaritimeTool() {
-  return <div><h2>Maritime Flags Tool</h2><p>Decode international maritime signal flags here.</p></div>;
-}
 
 function App() {
   return (
