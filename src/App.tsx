@@ -5,6 +5,8 @@ import CaesarTool from './components/CaesarTool';
 import AnagramTool from './components/AnagramTool';
 import SemaphoreTool from './components/SemaphoreTool';
 import MaritimeTool from './components/MaritimeTool';
+import Base2Tool from './components/Base2Tool';
+import NumberToLetterTool from './components/NumberToLetterTool';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import './App.css';
 
@@ -45,6 +47,16 @@ const tools = [
     description: 'Decode international maritime signal flags.',
     path: '/maritime',
   },
+  {
+    name: '💾 Base 2 (Binary)',
+    description: 'Encode and decode text in binary.',
+    path: '/base2',
+  },
+  {
+    name: '🔢 Number to Letter',
+    description: 'Convert numbers (1=A, 2=B, ...) to letters.',
+    path: '/number-to-letter',
+  },
 ];
 
 function Dashboard() {
@@ -76,6 +88,8 @@ function App() {
         <Route path="/anagram" element={<AnagramTool />} />
         <Route path="/semaphore" element={<SemaphoreTool />} />
         <Route path="/maritime" element={<MaritimeTool />} />
+        <Route path="/base2" element={<Base2Tool />} />
+        <Route path="/number-to-letter" element={<NumberToLetterTool />} />
       </Routes>
     </Router>
   );
